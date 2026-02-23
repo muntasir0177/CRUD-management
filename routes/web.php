@@ -16,7 +16,9 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
   
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
+    // resource controller contains all the mothods for the resource like index, create, store, show, edit, update, destroy
+    Route::resource('roles', RoleController::class); 
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('posts', PostController::class);
 });
