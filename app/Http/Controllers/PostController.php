@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use illuminate\Http\RedirectResponse;
+use Illuminate\Http\RedirectResponse;
+
 
 class PostController extends Controller
 {
