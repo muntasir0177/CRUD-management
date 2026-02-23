@@ -41,14 +41,20 @@ class PostController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        request()->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'image' => 'required',
+        $request->validate([
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string',
+            'image'   => 'nullable|url',
         ]);
 
-        Post::create($request->all());
-        return redirect()->route('posts.index');
+        Post::create([
+            'title'   => $request->title,
+            'content' => $request->content,
+            'image'   => $request->image,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
     /**
@@ -72,13 +78,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post): RedirectResponse
     {
-        request()->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'image' => 'required',
+        $request->validate([
+            'title'   => 'required|string|max:255',
+            'content' => 'required|string',
+            'image'   => 'nullable|url',
         ]);
-        $post->update($request->all());
-        return redirect()->route('posts.index')->with('success', 'Post updated successfully');
+
+        $post->update([
+            'title'   => $request->title,
+            'content' => $request->content,
+            'image'   => $request->image,
+        ]);
+
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
     /**
